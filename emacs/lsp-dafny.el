@@ -290,7 +290,8 @@ TAGS are ignored."
 
 ;;;; Custom notifications
 
-(lsp-interface (dafny:compilation/progress (:uri :status :message)))
+(eval-and-compile
+  (lsp-interface (dafny:compilation/progress (:uri :status :message))))
 
 (defvar-local lsp-dafny--verification-status nil)
 
@@ -299,7 +300,7 @@ TAGS are ignored."
 
 (defun lsp-dafny--handle-/compilation/status (_workspace msg)
   "Handle the dafny/compilation/status notification MSG."
-  (pcase-let (((dafny:compilation/progress :uri :status :message) msg))
+  (pcase-let (((lsp-interface dafny:compilation/progress :uri :status :message) msg))
     (with-current-buffer (-> uri lsp--uri-to-path find-file-noselect)
       (setq-local
        lsp-dafny--verification-status
@@ -390,7 +391,8 @@ details."
 
 ;;;; Counterexamples
 
-(lsp-interface (dafny:counterexample (:position :variables)))
+(eval-and-compile
+  (lsp-interface (dafny:counterexample (:position :variables))))
 
 (defvar-local lsp-dafny--counterexamples ()
   "Local cache of counterexample windows.")
@@ -454,7 +456,7 @@ Prefix each line with INDENT."
 (defun lsp-dafny--counterexamples-cleanup-variables (counterexamples)
   "Clean up variable types in COUNTEREXAMPLES."
   ;; FIXME: Move this to the server?
-  (pcase-dolist ((dafny:counterexample :variables) counterexamples)
+  (pcase-dolist ((lsp-interface dafny:counterexample :variables) counterexamples)
     (pcase-dolist (`(,var . ,val) (ht->alist variables))
       (let ((var_ (lsp-dafny--counterexamples-cleanup-1 var))
             (val_ (lsp-dafny--counterexamples-cleanup-1 val)))
@@ -465,7 +467,7 @@ Prefix each line with INDENT."
 
 (defun lsp-dafny--counterexamples-render-one (cx)
   "Create an overlay for one counter example CX and return it."
-  (pcase-let* (((dafny:counterexample :position :variables) cx)
+  (pcase-let* (((lsp-interface dafny:counterexample :position :variables) cx)
                (pt (lsp--position-to-point position)))
     (goto-char pt)
     (let* ((bol (progn (beginning-of-line) (point)))
