@@ -3,9 +3,5 @@
 
 (package-file "boogie-friends.el")
 
-(depends-on "cl-lib")
-(depends-on "company")
-(depends-on "dash")
-(depends-on "flycheck")
-(depends-on "yasnippet")
+;; for lsp-dafny.el
 (depends-on "lsp-mode")
