@@ -58,6 +58,7 @@
 ;; This file is a collection of convenient definitions and utilies for the
 ;; various programming modes that this package offers.
 
+(require 'dash)
 (require 'flycheck)
 (require 'company)
 (require 'yasnippet)

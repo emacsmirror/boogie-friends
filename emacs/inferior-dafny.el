@@ -84,6 +84,7 @@
 ;;; Code:
 
 (require 'json)
+(require 'dash)
 (require 'flycheck)
 (require 'boogie-friends)
 

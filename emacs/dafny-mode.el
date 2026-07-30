@@ -35,6 +35,7 @@
 ;; This file contains the implementation of the Dafny part of the boogie-friends
 ;; package
 
+(require 'dash)
 (require 'boogie-friends)
 (require 'boogie-mode)
 (require 'dafny-docs)
