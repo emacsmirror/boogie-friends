@@ -34,5 +34,7 @@ def read_clean_docs():
         cleanup(top)
     return top
 
+docs = str(read_clean_docs()).encode("UTF-8")
+
 with gzip.open("etc/dafny-docs.html.gz", mode='wb') as writer:
-    writer.write(str(read_clean_docs()).encode("UTF-8"))
+    writer.write(docs)

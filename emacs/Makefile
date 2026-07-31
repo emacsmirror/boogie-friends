@@ -6,7 +6,7 @@ WRITE_PKG_FILE = $(EMACS) -Q --batch -l scripts/package-name.el -f my-write-pkg-
 
 all: depends elc
 
-.PHONY: depends elc clean-elc version pkg-file package-contents package clean-package sandbox clean-sandbox test clean all
+.PHONY: depends elc clean-elc version pkg-file dafny-docs package-contents package clean-package sandbox clean-sandbox test clean all
 
 depends:
 	$(CASK) install
@@ -24,10 +24,10 @@ version:
 pkg-file:
 	$(WRITE_PKG_FILE) .
 
-etc/dafny-docs.html.gz: scripts/rebuild-dafny-docs.py
+dafny-docs:
 	python3 ./scripts/rebuild-dafny-docs.py
 
-package-contents: clean-elc elc etc/dafny-docs.html.gz
+package-contents: clean-elc elc
 
 package: clean-package package-contents
 	mkdir -p build/$(PACKAGE)
